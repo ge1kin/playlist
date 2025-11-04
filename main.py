@@ -41,21 +41,23 @@ def add_song(song_name: str, artist: str, genre: str, duration: tuple) -> None:
     liked_songs[song_name] = {"artist": artist, "genre": genre, "duration": duration}
 
 
-def main():
-    song_amount = int(input("Enter the amount of songs you would like to add as an integer number: "))
-    i = 0
-    while i < song_amount:
+def get_song_info(song_amount: int) -> None:
+    added_counter = 0
+    while  added_counter < song_amount:
         song_name = input("Enter the name of the song: ")
-        while song_name in liked_songs.keys():
+        if song_name in liked_songs.keys():
             lower_amount = input("That song is already in the playlist of liked songs. would you like to lower the amount of songs you would like to add? ")
             if lower_amount.lower() == "yes":
-                i += 1
-            i += 1
-            song_name = input("Enter the name of the song: ")
-        artist = input("Enter the name of the artist: ")
-        genre = input("Enter the genre: ")
-        duration = (int(input("Enter the amount of minuets: ")), int(input("Enter the amount of secondes: ")))
-        add_song(song_name, artist, genre, duration)
+                added_counter += 1
+        else:
+            artist = input("Enter the name of the artist: ")
+            genre = input("Enter the genre: ")
+            duration = (int(input("Enter the amount of minuets: ")), int(input("Enter the amount of secondes: ")))
+            add_song(song_name, artist, genre, duration)
+
+def main():
+    song_amount = int(input("Enter the amount of songs you would like to add as an integer number: "))
+    get_song_info(song_amount)
 
 
 if __name__ == "__main__":
