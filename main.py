@@ -36,6 +36,9 @@ liked_songs = {
     }
 }
 
+def check_in_liked(song_name: str) -> bool:
+    return song_name in liked_songs.keys()
+
 
 def add_song(song_name: str, artist: str, genre: str, duration: tuple) -> None:
     liked_songs[song_name] = {"artist": artist, "genre": genre, "duration": duration}
@@ -45,7 +48,7 @@ def get_song_info(song_amount: int) -> None:
     added_counter = 0
     while  added_counter < song_amount:
         song_name = input("Enter the name of the song: ")
-        if song_name in liked_songs.keys():
+        if check_in_liked(song_name):
             lower_amount = input("That song is already in the playlist of liked songs. would you like to lower the amount of songs you would like to add? ")
             if lower_amount.lower() == "yes":
                 added_counter += 1
@@ -55,10 +58,18 @@ def get_song_info(song_amount: int) -> None:
             duration = (int(input("Enter the amount of minuets: ")), int(input("Enter the amount of secondes: ")))
             add_song(song_name, artist, genre, duration)
 
+
+def remove_song(song_name: str):
+    del liked_songs[song_name]
+
 def main():
     song_amount = int(input("Enter the amount of songs you would like to add as an integer number: "))
     get_song_info(song_amount)
-
+    song_name = input("Enter song to remove: ")
+    if check_in_liked(song_name):
+        remove_song(song_name)
+    else:
+        print(f"The song {song_name} is not in the liked songs")
 
 if __name__ == "__main__":
     main()
