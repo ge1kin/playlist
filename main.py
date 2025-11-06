@@ -1,4 +1,4 @@
-liked_songs = {
+LIKED_SONGS = {
     "Shake It Off": {
         "artist": "Taylor Swift",
         "duration": (3, 23),
@@ -37,11 +37,11 @@ liked_songs = {
 }
 
 def check_in_liked(song_name: str) -> bool:
-    return song_name in liked_songs.keys()
+    return song_name in LIKED_SONGS.keys()
 
 
 def add_song(song_name: str, artist: str, genre: str, duration: tuple) -> None:
-    liked_songs[song_name] = {"artist": artist, "genre": genre, "duration": duration}
+    LIKED_SONGS[song_name] = {"artist": artist, "genre": genre, "duration": duration}
 
 
 def get_song_info(song_amount: int) -> None:
@@ -57,12 +57,23 @@ def get_song_info(song_amount: int) -> None:
             genre = input("Enter the genre: ")
             duration = (int(input("Enter the amount of minuets: ")), int(input("Enter the amount of secondes: ")))
             add_song(song_name, artist, genre, duration)
+            added_counter += 1
+
+def remove_song(song_name: str) -> None:
+    del LIKED_SONGS[song_name]
 
 
-def remove_song(song_name: str):
-    del liked_songs[song_name]
+def remove_by_artist(artist: str) -> None:
+    remove_lst = []
+    for song, info in LIKED_SONGS.items():
+        if info["artist"] == artist:
+            remove_lst.append(song)
+    while len(remove_lst) > 0:
+        remove_song(remove_lst[0])
+        remove_lst.remove(remove_lst[0])
 
-def main():
+
+def main() -> None:
     song_amount = int(input("Enter the amount of songs you would like to add as an integer number: "))
     get_song_info(song_amount)
     song_name = input("Enter song to remove: ")
@@ -70,6 +81,9 @@ def main():
         remove_song(song_name)
     else:
         print(f"The song {song_name} is not in the liked songs")
+    remove_by_artist(input("Enter artist name: "))
+    print(LIKED_SONGS)
+
 
 if __name__ == "__main__":
     main()
