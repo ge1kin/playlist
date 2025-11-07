@@ -73,6 +73,13 @@ def remove_by_artist(artist: str) -> None:
         remove_lst.remove(remove_lst[0])
 
 
+def check_for_artist(artist: str) -> bool:
+    for song, info in LIKED_SONGS.items():
+        if info["artist"] == artist:
+            return True
+    return False
+
+
 def main() -> None:
     song_amount = int(input("Enter the amount of songs you would like to add as an integer number: "))
     get_song_info(song_amount)
@@ -80,9 +87,12 @@ def main() -> None:
     if check_in_liked(song_name):
         remove_song(song_name)
     else:
-        print(f"The song {song_name} is not in the liked songs")
-    remove_by_artist(input("Enter artist name: "))
-    print(LIKED_SONGS)
+        print(f"The song {song_name} is not in the liked songs.")
+    artist = input("Enter artist name: ")
+    if check_for_artist(artist):
+        remove_by_artist(artist)
+    else:
+        print("That artist is not in the playlist.")
 
 
 if __name__ == "__main__":
